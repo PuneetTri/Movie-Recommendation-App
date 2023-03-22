@@ -4,6 +4,9 @@ import HomeScreen from "./screens/HomeScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import WatchlistScreen from "./screens/WatchlistScreen";
+import AccountScreen from "./screens/AccountSettingScreen";
+import WatchlistSettingScreen from "./screens/WatchlistSettingScreen";
+import StreamingPreferencesScreen from "./screens/StreamingPreferenceScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -13,10 +16,16 @@ export default function App() {
   return (
     <NavigationContainer>
       <StatusBar />
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         {/* Screens */}
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Watchlist" component={WatchlistScreen} />
+        <Stack.Screen name="Account" component={AccountScreen} />
+        <Stack.Screen name="Streaming" component={StreamingPreferencesScreen} />
+        <Stack.Screen
+          name="WatchlistSetting"
+          component={WatchlistSettingScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

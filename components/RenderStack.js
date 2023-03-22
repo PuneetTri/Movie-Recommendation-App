@@ -42,15 +42,6 @@ const RenderStack = ({ data }) => {
               },
             },
           },
-          top: {
-            title: "WATCHED",
-            style: {
-              label: {
-                color: "green",
-                textAlign: "center",
-              },
-            },
-          },
         }}
         onSwipedRight={async (index) => {
           const url = data[index].link;

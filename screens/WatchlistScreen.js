@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { ChevronLeftIcon } from "react-native-heroicons/solid";
 import { FlatList } from "react-native";
 import WatchlistItem from "../components/WatchlistItem";
+import Header from "../components/Header";
 
 const WatchlistScreen = () => {
   const navigation = useNavigation();
@@ -83,12 +84,7 @@ const WatchlistScreen = () => {
   return (
     <View>
       {/* Header */}
-      <View className="flex-row items-center p-4 space-x-2 border-b-2 border-green-500 bg-black">
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <ChevronLeftIcon size={30} color="white" />
-        </TouchableOpacity>
-        <Text className="text-xl text-white">Watchlist</Text>
-      </View>
+      <Header screenName="Watchlist" navigation={navigation} />
 
       {/* Body */}
       <View>

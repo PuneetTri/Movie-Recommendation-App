@@ -3,11 +3,8 @@ import React from "react";
 
 const WatchlistItem = ({ posterImgUrl, title, description, link }) => {
   return (
-    <TouchableHighlight
-      underlayColor={"gray"}
-      onPress={() => console.log(link)}
-    >
-      <View className="p-2 space-x-2">
+    <View>
+      <View className="p-2 flex-row space-x-2">
         <Image
           source={{
             uri: posterImgUrl,
@@ -25,7 +22,7 @@ const WatchlistItem = ({ posterImgUrl, title, description, link }) => {
           </Text>
         </View>
       </View>
-    </TouchableHighlight>
+    </View>
   );
 };
 

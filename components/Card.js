@@ -17,7 +17,7 @@ const Card = ({ posterImg, name, description }) => {
     setDescriptionCollapsed(!descriptionCollapsed);
   };
   return (
-    <View className="bg-white h-full w-screen relative -mt-12 -ml-5 rounded-xl overflow-hidden">
+    <View className="bg-white h-full relative -mt-12  rounded-xl overflow-hidden">
       <Image
         source={{
           uri: posterImg,
@@ -49,7 +49,7 @@ const Card = ({ posterImg, name, description }) => {
             className="absolute bottom-0 w-screen h-full"
           />
           <View className="absolute bottom-0 left-0 p-4">
-            <Text className="text-green-500 text-3xl">{name}</Text>
+            <Text className="text-green-500 text-3xl font-bold">{name}</Text>
             <TouchableOpacity onPress={() => toggleDescription()}>
               <Text className="text-white">{description}</Text>
               <View className="flex-row items-center flex-wrap">
@@ -75,7 +75,7 @@ const Card = ({ posterImg, name, description }) => {
             className="absolute bottom-0 w-screen h-full"
           />
           <View className="absolute bottom-0 left-0 p-4">
-            <Text className="text-green-500 text-3xl">{name}</Text>
+            <Text className="text-green-500 text-3xl font-bold">{name}</Text>
             <TouchableOpacity onPress={() => toggleDescription()}>
               <Text className="text-white" numberOfLines={3}>
                 {description}
