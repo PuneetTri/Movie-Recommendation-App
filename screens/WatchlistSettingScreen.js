@@ -8,6 +8,10 @@ const WatchlistSettingScreen = () => {
   return (
     <View>
       <Header screenName={"Watchlist settings"} navigation={navigation} />
+
+      <View>
+        <Text>Watchlist</Text>
+      </View>
     </View>
   );
 };

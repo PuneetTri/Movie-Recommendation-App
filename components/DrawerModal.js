@@ -24,23 +24,20 @@ const DrawerModal = ({ isVisible, toggle, userProfileImg, navigation }) => {
       animationIn="slideInLeft"
       animationOut="slideOutLeft"
     >
-      <View style={{ marginLeft: -18 }} className="bg-black w-5/6 h-screen p-4">
-        <View>
+      <View style={{ marginLeft: -18 }} className="bg-black w-5/6 h-screen">
+        <View style={{ borderBottomWidth: 1 }} className="p-4 border-gray-800">
           <Image
             source={{
               uri: userProfileImg,
             }}
             className="rounded-full h-12 w-12"
           />
-          <View
-            style={{ borderBottomWidth: 1 }}
-            className="py-4 border-gray-400"
-          >
+          <View className="py-4">
             <Text className="text-white font-bold text-xl">Joe Biden</Text>
             <Text className="text-xs text-gray-400">joebiden@gmail.com</Text>
           </View>
         </View>
-        <View className="my-8">
+        <View className="p-4 flex-1">
           <TouchableOpacity
             className="flex-row items-center space-x-4 my-4"
             onPress={() => {
@@ -48,12 +45,12 @@ const DrawerModal = ({ isVisible, toggle, userProfileImg, navigation }) => {
               navigation.navigate("Account");
             }}
           >
-            <UserIcon size={30} color="white" />
-            <Text className="text-white text-2xl">Account</Text>
+            <UserIcon size={30} color="#4CAF50" />
+            <Text className="text-white text-xl">Account</Text>
           </TouchableOpacity>
           <TouchableOpacity className="flex-row items-center space-x-4 my-4">
-            <PencilSquareIcon size={30} color="white" />
-            <Text className="text-white text-2xl">Preferences</Text>
+            <PencilSquareIcon size={30} color="#4CAF50" />
+            <Text className="text-white text-xl">Preferences</Text>
           </TouchableOpacity>
           <TouchableOpacity
             className="flex-row items-center space-x-4 my-4"
@@ -62,8 +59,8 @@ const DrawerModal = ({ isVisible, toggle, userProfileImg, navigation }) => {
               navigation.navigate("Streaming");
             }}
           >
-            <FilmIcon size={30} color="white" />
-            <Text className="text-white text-2xl">Streaming</Text>
+            <FilmIcon size={30} color="#4CAF50" />
+            <Text className="text-white text-xl">Streaming</Text>
           </TouchableOpacity>
           <TouchableOpacity
             className="flex-row items-center space-x-4 my-4"
@@ -72,14 +69,13 @@ const DrawerModal = ({ isVisible, toggle, userProfileImg, navigation }) => {
               navigation.navigate("WatchlistSetting");
             }}
           >
-            <BookmarkIcon size={30} color="white" />
-            <Text className="text-white text-2xl">Watchlist</Text>
-          </TouchableOpacity>
-          <TouchableOpacity className="flex-row items-center space-x-4 my-4">
-            <ArrowLeftOnRectangleIcon size={30} color="rgb(239,68,68)" />
-            <Text className="text-red-500 text-2xl">Logout</Text>
+            <BookmarkIcon size={30} color="#4CAF50" />
+            <Text className="text-white text-xl">Watchlist</Text>
           </TouchableOpacity>
         </View>
+        <TouchableOpacity className="mx-4 my-8 bg-red-500 p-4 rounded-full items-center">
+          <Text className="text-xl font-bold text-white">LOGOUT</Text>
+        </TouchableOpacity>
       </View>
     </Modal>
   );

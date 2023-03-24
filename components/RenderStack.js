@@ -43,6 +43,7 @@ const RenderStack = ({ data }) => {
             },
           },
         }}
+        swipeAnimationDuration={350}
         onSwipedRight={async (index) => {
           const url = data[index].link;
           const supported = await Linking.canOpenURL(url);
