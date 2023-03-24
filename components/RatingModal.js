@@ -11,7 +11,7 @@ const RatingModal = ({
 }) => {
   return (
     <Modal coverScreen={true} animationInTiming={100} isVisible={isVisible}>
-      <View className="bg-black p-4 rounded-xl">
+      <View className="bg-black p-4 rounded-xl w-11/12 self-center">
         <Text className="text-white text-center text-xl">
           What do you think of{"\n"}
           <Text className="text-green-500 font-bold text-2xl">

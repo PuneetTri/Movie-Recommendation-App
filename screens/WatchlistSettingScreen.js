@@ -16,7 +16,7 @@ const WatchlistSettingScreen = () => {
           <Text className="text-white text-sm flex-1">
             Set limit of movies in watchlist
           </Text>
-          <CounterButton val={7} lowerLimit={1} upperLimit={10} />
+          <CounterButton val={7} lowerLimit={1} upperLimit={7} />
         </View>
         <View className="flex-row items-center">
           <Text className="text-white text-sm flex-1">
@@ -25,7 +25,6 @@ const WatchlistSettingScreen = () => {
           <CounterButton val={3} lowerLimit={1} upperLimit={7} />
         </View>
       </View>
-      <RoundedGreenButton text="SAVE" />
     </View>
   );
 };
