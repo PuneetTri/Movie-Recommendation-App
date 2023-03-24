@@ -32,6 +32,9 @@ const WatchlistMovieModal = ({
             }}
             className="h-72 w-48 self-center mt-4"
           />
+          <Text className="text-green-500 text-3xl font-bold self-center">
+            {title}
+          </Text>
           <Text className="text-gray-500 text-lg self-center">
             Comedy, Drama
           </Text>
