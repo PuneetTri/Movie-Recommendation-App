@@ -5,6 +5,7 @@ import { ChevronLeftIcon } from "react-native-heroicons/solid";
 import { FlatList } from "react-native";
 import WatchlistItem from "../components/WatchlistItem";
 import Header from "../components/Header";
+import { ScrollView } from "react-native";
 
 const WatchlistScreen = () => {
   const navigation = useNavigation();
@@ -70,39 +71,28 @@ const WatchlistScreen = () => {
         "https://englishtribuneimages.blob.core.windows.net/gallary-content/2022/9/2022_9$largeimg_160792675.jpg",
       link: "https://www.netflix.com/in/title/81496006?source=35",
     },
-    {
-      id: 7,
-      name: "Chhello Show",
-      description:
-        "When the magic of movies conquers nine-year-old Samay's heart, he moves heaven and Earth in pursuit of his 35mm dreams. However, he is unaware of heartbreaking times that await him.",
-      posterImg:
-        "https://englishtribuneimages.blob.core.windows.net/gallary-content/2022/9/2022_9$largeimg_160792675.jpg",
-      link: "https://www.netflix.com/in/title/81496006?source=35",
-    },
   ];
 
   return (
-    <View>
+    <View className="flex-1 bg-black">
       {/* Header */}
       <Header screenName="Watchlist" navigation={navigation} />
 
       {/* Body */}
-      <View>
-        <FlatList
-          data={movies}
-          keyExtractor={(movie) => movie.id.toString()}
-          ItemSeparatorComponent={() => (
-            <View style={{ height: 1 }} className="w-full bg-green-500" />
-          )}
-          renderItem={({ item }) => (
-            <WatchlistItem
-              posterImgUrl={item.posterImg}
-              title={item.name}
-              description={item.description}
-              link={item.link}
-            />
-          )}
-        />
+      <View className="flex-1">
+        <ScrollView>
+          {movies.map((movie) => {
+            return (
+              <WatchlistItem
+                key={movie.id}
+                posterImgUrl={movie.posterImg}
+                title={movie.name}
+                description={movie.description}
+                link={movie.link}
+              />
+            );
+          })}
+        </ScrollView>
       </View>
     </View>
   );

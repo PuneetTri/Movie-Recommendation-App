@@ -1,27 +1,42 @@
-import { View, Text, Image, TouchableHighlight } from "react-native";
-import React from "react";
+import { View, Text, Image, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import WatchlistMovieModal from "./WatchlistMovieModal";
 
 const WatchlistItem = ({ posterImgUrl, title, description, link }) => {
+  const [expanded, setExpanded] = useState(false);
+  const expand = () => setExpanded(!expanded);
   return (
     <View>
-      <View className="p-2 flex-row space-x-2">
+      <TouchableOpacity
+        onPress={() => expand()}
+        className="flex-row p-4 space-x-2 items-center"
+      >
         <Image
           source={{
             uri: posterImgUrl,
           }}
-          className="h-24 w-16"
+          className="h-28 w-20"
         />
         <View className="flex-auto">
-          <Text className="text-lg font-bold">{title}</Text>
-          <Text className="" numberOfLines={3}>
+          <Text className="text-white text-lg">{title}</Text>
+          <Text numberOfLines={3} className="text-gray-400 text-sm">
             {description}
           </Text>
-          <Text className="text-gray-500" numberOfLines={1}>
-            Horror Director Actor, Actress, Side Character, Another Side
-            Character
+          <Text className="text-gray-600 text-xs">Comedy, Drama</Text>
+          <Text numberOfLines={1} className="text-gray-600 text-xs">
+            Actor, Second actor, Third actor, supporting actor
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
+
+      <WatchlistMovieModal
+        isVisible={expanded}
+        setExpanded={setExpanded}
+        posterImageUrl={posterImgUrl}
+        title={title}
+        description={description}
+        link={link}
+      />
     </View>
   );
 };
