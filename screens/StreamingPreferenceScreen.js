@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 import { useNavigation } from "@react-navigation/native";
 import StreamingServiceCard from "../components/StreamingServiceCard";
+import RoundedGreenButton from "../components/RoundedGreenButton";
 
 const PreferencesScreen = () => {
   const services = [
@@ -72,9 +73,7 @@ const PreferencesScreen = () => {
           })}
           <View className="h-16"></View>
         </ScrollView>
-        <TouchableOpacity className="absolute bg-green-500 p-4 rounded-full items-center bottom-4 w-full self-center">
-          <Text className="text-xl font-bold text-white">SAVE</Text>
-        </TouchableOpacity>
+        <RoundedGreenButton text="SAVE" />
       </View>
     </View>
   );
