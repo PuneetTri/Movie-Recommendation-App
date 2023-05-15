@@ -4,14 +4,11 @@ import { ChevronLeftIcon } from "react-native-heroicons/solid";
 
 const Header = ({ screenName, navigation }) => {
   return (
-    <View
-      style={{ borderBottomWidth: 1 }}
-      className="flex-row items-center p-4 space-x-2 border-green-500 bg-black"
-    >
+    <View className="flex-row items-center p-4 space-x-2 bg-black">
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <ChevronLeftIcon size={30} color="white" />
       </TouchableOpacity>
-      <Text className="text-xl text-white">{screenName}</Text>
+      <Text className="text-3xl font-bold text-white">{screenName}</Text>
     </View>
   );
 };

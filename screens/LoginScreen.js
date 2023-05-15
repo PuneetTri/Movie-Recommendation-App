@@ -2,17 +2,19 @@ import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import React from "react";
 import { ChevronLeftIcon } from "react-native-heroicons/solid";
 import { useNavigation } from "@react-navigation/native";
+import Header from "../components/Header";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
   return (
     <View className="flex-1 bg-black">
-      <View className="flex-row items-center space-x-4 p-4">
+      {/* <View className="flex-row items-center space-x-4 p-4">
         <TouchableOpacity onPress={() => navigation.navigate("Landing")}>
           <ChevronLeftIcon size={30} color="white" />
         </TouchableOpacity>
         <Text className="text-3xl font-bold text-white">Log in</Text>
-      </View>
+      </View> */}
+      <Header screenName={"Log in"} navigation={navigation} />
 
       <View className="p-8 space-y-4">
         <View className="space-y-2">
@@ -35,9 +37,9 @@ const LoginScreen = () => {
           />
         </View>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Home")}>
           <View className="bg-green-500 items-center p-4 rounded-lg">
-            <Text className="text-white">Create Account</Text>
+            <Text className="text-white">Log in</Text>
           </View>
         </TouchableOpacity>
 

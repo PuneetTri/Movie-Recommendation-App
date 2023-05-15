@@ -48,7 +48,13 @@ const DrawerModal = ({ isVisible, toggle, userProfileImg, navigation }) => {
             <UserIcon size={30} color="#4CAF50" />
             <Text className="text-white text-xl">Account</Text>
           </TouchableOpacity>
-          <TouchableOpacity className="flex-row items-center space-x-4 my-4">
+          <TouchableOpacity
+            className="flex-row items-center space-x-4 my-4"
+            onPress={() => {
+              toggle();
+              navigation.navigate("Preferences");
+            }}
+          >
             <PencilSquareIcon size={30} color="#4CAF50" />
             <Text className="text-white text-xl">Preferences</Text>
           </TouchableOpacity>

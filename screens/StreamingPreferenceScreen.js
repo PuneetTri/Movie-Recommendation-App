@@ -46,7 +46,11 @@ const PreferencesScreen = () => {
   const navigation = useNavigation();
   return (
     <View className="bg-black flex-1">
-      <Header className="flex-1" navigation={navigation} />
+      <Header
+        screenName={"Streaming"}
+        className="flex-1"
+        navigation={navigation}
+      />
 
       <View className="p-4 space-y-1 flex-1 relative">
         <ScrollView>
@@ -73,7 +77,11 @@ const PreferencesScreen = () => {
           })}
           <View className="h-16"></View>
         </ScrollView>
-        <RoundedGreenButton text="SAVE" />
+        <RoundedGreenButton
+          text="SAVE"
+          navigation={navigation}
+          navigateTo={"Home"}
+        />
       </View>
     </View>
   );
