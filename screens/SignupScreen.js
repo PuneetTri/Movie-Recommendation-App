@@ -13,9 +13,19 @@ const SignupScreen = () => {
 
       <View className="p-8 space-y-4">
         <View className="space-y-2">
-          <Text className="text-white">Name</Text>
+          <Text className="text-white">First Name</Text>
           <TextInput
-            placeholder="John Doe"
+            placeholder="John"
+            placeholderTextColor={"#6B7280"}
+            style={{ borderBottomWidth: 1 }}
+            className="text-white text-sm bg-zinc-900 p-4 rounded-lg"
+          />
+        </View>
+
+        <View className="space-y-2">
+          <Text className="text-white">Last Name</Text>
+          <TextInput
+            placeholder="Doe"
             placeholderTextColor={"#6B7280"}
             style={{ borderBottomWidth: 1 }}
             className="text-white text-sm bg-zinc-900 p-4 rounded-lg"

@@ -56,7 +56,7 @@ const PreferencesScreen = () => {
         <ScrollView>
           <View className="py-4">
             <Text className="text-white text-2xl font-bold">
-              Select streaming service
+              What streaming services do you prefer?
             </Text>
             <Text className="text-md text-gray-400">
               Select you favourite streaming services, or streaming services you

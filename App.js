@@ -11,6 +11,7 @@ import LandingScreen from "./screens/LandingScreen";
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
 import WatchPreferenceScreen from "./screens/WatchPreferenceScreen";
+import ChangePasswordScreen from "./screens/ChangePasswordScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +30,7 @@ export default function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Watchlist" component={WatchlistScreen} />
         <Stack.Screen name="Account" component={AccountScreen} />
+        <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
         <Stack.Screen name="Streaming" component={StreamingPreferencesScreen} />
         <Stack.Screen
           name="WatchlistSetting"
