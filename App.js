@@ -7,6 +7,9 @@ import WatchlistScreen from "./screens/WatchlistScreen";
 import AccountScreen from "./screens/AccountSettingScreen";
 import WatchlistSettingScreen from "./screens/WatchlistSettingScreen";
 import StreamingPreferencesScreen from "./screens/StreamingPreferenceScreen";
+import LandingScreen from "./screens/LandingScreen";
+import LoginScreen from "./screens/LoginScreen";
+import SignupScreen from "./screens/SignupScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +21,9 @@ export default function App() {
       <StatusBar />
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {/* Screens */}
+        <Stack.Screen name="Landing" component={LandingScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Signup" component={SignupScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Watchlist" component={WatchlistScreen} />
         <Stack.Screen name="Account" component={AccountScreen} />
