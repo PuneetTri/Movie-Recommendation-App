@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, TouchableHighlight } from "react-native";
+import { View, Text, TouchableHighlight } from "react-native";
 import React, { useState } from "react";
 
 const CounterButton = ({ val, upperLimit, lowerLimit }) => {

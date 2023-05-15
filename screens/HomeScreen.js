@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image, onLayout } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { BookmarkIcon } from "react-native-heroicons/solid";
 import RenderStack from "../components/RenderStack";

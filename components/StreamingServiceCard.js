@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { TouchableOpacity, Image } from "react-native";
 import React, { useState } from "react";
 import { CheckCircleIcon } from "react-native-heroicons/outline";
 import { CheckCircleIcon as CheckCircleIconSolid } from "react-native-heroicons/solid";

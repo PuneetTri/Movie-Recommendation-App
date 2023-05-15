@@ -1,8 +1,6 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View } from "react-native";
 import React, { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { ChevronLeftIcon } from "react-native-heroicons/solid";
-import { FlatList } from "react-native";
 import WatchlistItem from "../components/WatchlistItem";
 import Header from "../components/Header";
 import { ScrollView } from "react-native";

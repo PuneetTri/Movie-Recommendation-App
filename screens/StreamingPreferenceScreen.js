@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  TouchableHighlight,
-  ScrollView,
-} from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import React, { useState } from "react";
 import Header from "../components/Header";
 import { useNavigation } from "@react-navigation/native";

@@ -1,6 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
-import { ChevronLeftIcon } from "react-native-heroicons/solid";
 import { useNavigation } from "@react-navigation/native";
 import { TextInput } from "react-native-gesture-handler";
 import Header from "../components/Header";

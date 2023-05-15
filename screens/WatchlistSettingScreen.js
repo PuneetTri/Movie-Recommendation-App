@@ -3,7 +3,6 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import Header from "../components/Header";
 import RoundedGreenButton from "../components/RoundedGreenButton";
-import { TouchableOpacity } from "react-native";
 import CounterButton from "../components/CounterButton";
 
 const WatchlistSettingScreen = () => {

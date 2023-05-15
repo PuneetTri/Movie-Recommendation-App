@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React, { useState } from "react";
 import Swiper from "react-native-deck-swiper";
 import * as Linking from "expo-linking";

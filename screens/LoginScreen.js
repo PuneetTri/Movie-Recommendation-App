@@ -1,6 +1,5 @@
 import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import React from "react";
-import { ChevronLeftIcon } from "react-native-heroicons/solid";
 import { useNavigation } from "@react-navigation/native";
 import Header from "../components/Header";
 
@@ -8,12 +7,6 @@ const LoginScreen = () => {
   const navigation = useNavigation();
   return (
     <View className="flex-1 bg-black">
-      {/* <View className="flex-row items-center space-x-4 p-4">
-        <TouchableOpacity onPress={() => navigation.navigate("Landing")}>
-          <ChevronLeftIcon size={30} color="white" />
-        </TouchableOpacity>
-        <Text className="text-3xl font-bold text-white">Log in</Text>
-      </View> */}
       <Header screenName={"Log in"} navigation={navigation} />
 
       <View className="p-8 space-y-4">
