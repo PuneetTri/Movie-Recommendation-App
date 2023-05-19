@@ -56,6 +56,7 @@ const WatchPreferenceScreen = () => {
           {genres.map((genre) => {
             return (
               <GenreSelectButton
+                key={genre.id}
                 GenreName={genre.name}
                 isSelected={genre.selected}
               />
