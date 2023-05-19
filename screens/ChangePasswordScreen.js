@@ -1,11 +1,42 @@
-import { View, Text, TextInput } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
+import React, { useState } from "react";
 import Header from "../components/Header";
 import { useNavigation } from "@react-navigation/native";
 import RoundedGreenButton from "../components/RoundedGreenButton";
+import axios from "axios";
+import BASE_URL from "../config/config";
+
+const updatePassword = async (password, newPassword) => {
+  try {
+    await axios.put(`${BASE_URL}/user/update/password`, {
+      userId: "646798f476369e8f3b76186b",
+      data: {
+        password,
+        newPassword,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const ChangePasswordScreen = () => {
+  const [loading, setLoading] = useState(false);
+  const [password, setPassword] = useState(null);
+  const [newPassword, setNewPassword] = useState(null);
   const navigation = useNavigation();
+
+  const handleSave = async () => {
+    setLoading(true);
+    await updatePassword(password, newPassword);
+    setLoading(false);
+  };
   return (
     <View className="flex-1 bg-black">
       <Header screenName={"Change Password"} navigation={navigation} />
@@ -28,6 +59,9 @@ const ChangePasswordScreen = () => {
           <View className="space-y-2">
             <Text className="text-white">Current Password</Text>
             <TextInput
+              secureTextEntry
+              value={password}
+              onChangeText={(val) => setPassword(val)}
               placeholder="Type your current password"
               placeholderTextColor={"#6B7280"}
               style={{ borderBottomWidth: 1 }}
@@ -38,17 +72,10 @@ const ChangePasswordScreen = () => {
           <View className="space-y-2">
             <Text className="text-white">New Password</Text>
             <TextInput
+              secureTextEntry
+              value={newPassword}
+              onChangeText={(val) => setNewPassword(val)}
               placeholder="Select a strong password"
-              placeholderTextColor={"#6B7280"}
-              style={{ borderBottomWidth: 1 }}
-              className="text-white text-sm bg-zinc-900 p-4 rounded-lg"
-            />
-          </View>
-
-          <View className="space-y-2">
-            <Text className="text-white">Confirm Password</Text>
-            <TextInput
-              placeholder="Renter the password"
               placeholderTextColor={"#6B7280"}
               style={{ borderBottomWidth: 1 }}
               className="text-white text-sm bg-zinc-900 p-4 rounded-lg"
@@ -56,11 +83,18 @@ const ChangePasswordScreen = () => {
           </View>
         </View>
 
-        <RoundedGreenButton
-          text="SAVE"
-          navigation={navigation}
-          navigateTo={"Account"}
-        />
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={handleSave}
+          disabled={loading}
+          className="absolute bg-green-500 p-4 rounded-full items-center bottom-4 w-full self-center"
+        >
+          {loading === true ? (
+            <ActivityIndicator />
+          ) : (
+            <Text className="text-xl font-bold text-white">UPDATE</Text>
+          )}
+        </TouchableOpacity>
       </View>
     </View>
   );
