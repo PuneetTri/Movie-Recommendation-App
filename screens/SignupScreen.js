@@ -1,22 +1,36 @@
-import { View, Text, TouchableOpacity } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  ScrollView,
+} from "react-native";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { TextInput } from "react-native-gesture-handler";
 import Header from "../components/Header";
 
 const SignupScreen = () => {
+  const [firstName, setFirstName] = useState(null);
+  const [lastName, setLastName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+
   const navigation = useNavigation();
   return (
     <View className="flex-1 bg-black">
       <Header screenName={"Sign up"} navigation={navigation} />
 
-      <View className="p-8 space-y-4">
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        className="p-8 space-y-4"
+      >
         <View className="space-y-2">
           <Text className="text-white">First Name</Text>
           <TextInput
+            value={firstName}
+            onChangeText={(val) => setFirstName(val)}
             placeholder="John"
             placeholderTextColor={"#6B7280"}
-            style={{ borderBottomWidth: 1 }}
             className="text-white text-sm bg-zinc-900 p-4 rounded-lg"
           />
         </View>
@@ -24,9 +38,10 @@ const SignupScreen = () => {
         <View className="space-y-2">
           <Text className="text-white">Last Name</Text>
           <TextInput
+            value={lastName}
+            onChangeText={(val) => setLastName(val)}
             placeholder="Doe"
             placeholderTextColor={"#6B7280"}
-            style={{ borderBottomWidth: 1 }}
             className="text-white text-sm bg-zinc-900 p-4 rounded-lg"
           />
         </View>
@@ -34,9 +49,11 @@ const SignupScreen = () => {
         <View className="space-y-2">
           <Text className="text-white">Email</Text>
           <TextInput
+            secureTextEntry
+            value={email}
+            onChangeText={(val) => setEmail(val)}
             placeholder="johndoe@mail.com"
             placeholderTextColor={"#6B7280"}
-            style={{ borderBottomWidth: 1 }}
             className="text-white text-sm bg-zinc-900 p-4 rounded-lg"
           />
         </View>
@@ -44,9 +61,11 @@ const SignupScreen = () => {
         <View className="space-y-2">
           <Text className="text-white">Password</Text>
           <TextInput
+            secureTextEntry
+            value={password}
+            onChangeText={(val) => setPassword(val)}
             placeholder="Pick a strong password"
             placeholderTextColor={"#6B7280"}
-            style={{ borderBottomWidth: 1 }}
             className="text-white text-sm bg-zinc-900 p-4 rounded-lg"
           />
         </View>
@@ -66,7 +85,7 @@ const SignupScreen = () => {
             <Text className="text-green-500">Login</Text>
           </Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     </View>
   );
 };

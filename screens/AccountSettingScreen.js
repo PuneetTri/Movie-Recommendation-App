@@ -1,12 +1,40 @@
-import { View, Text, TouchableOpacity } from "react-native";
-import React from "react";
+import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
+import React, { useState } from "react";
 import Header from "../components/Header";
 import { useNavigation } from "@react-navigation/native";
 import { TextInput } from "react-native";
 import RoundedGreenButton from "../components/RoundedGreenButton";
+import axios from "axios";
+import BASE_URL from "../config/config";
+
+const updateAccount = async (firstName, lastName, email) => {
+  try {
+    await axios.put(`${BASE_URL}/user/update`, {
+      userId: "646798f476369e8f3b76186b",
+      data: {
+        firstname: firstName,
+        lastname: lastName,
+        email,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const AccountScreen = () => {
+  const [loading, setLoading] = useState(false);
+  const [firstName, setFirstName] = useState(null);
+  const [lastName, setLastName] = useState(null);
+  const [email, setEmail] = useState(null);
   const navigation = useNavigation();
+
+  const handleSave = async () => {
+    setLoading(true);
+    await updateAccount(firstName, lastName, email);
+    setLoading(false);
+  };
+
   return (
     <View className="flex-1 bg-black">
       <Header screenName={"Account settings"} navigation={navigation} />
@@ -28,6 +56,8 @@ const AccountScreen = () => {
           <View className="space-y-2">
             <Text className="text-white">First Name</Text>
             <TextInput
+              value={firstName}
+              onChangeText={(val) => setFirstName(val)}
               placeholder="John"
               placeholderTextColor={"#6B7280"}
               style={{ borderBottomWidth: 1 }}
@@ -38,6 +68,8 @@ const AccountScreen = () => {
           <View className="space-y-2">
             <Text className="text-white">Last Name</Text>
             <TextInput
+              value={lastName}
+              onChangeText={(val) => setLastName(val)}
               placeholder="Doe"
               placeholderTextColor={"#6B7280"}
               style={{ borderBottomWidth: 1 }}
@@ -48,6 +80,8 @@ const AccountScreen = () => {
           <View className="space-y-2">
             <Text className="text-white">Email</Text>
             <TextInput
+              value={email}
+              onChangeText={(val) => setEmail(val)}
               placeholder="johndoe@mail.com"
               placeholderTextColor={"#6B7280"}
               style={{ borderBottomWidth: 1 }}
@@ -62,11 +96,18 @@ const AccountScreen = () => {
           </TouchableOpacity>
         </View>
 
-        <RoundedGreenButton
-          text="SAVE"
-          navigation={navigation}
-          navigateTo={"Home"}
-        />
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={handleSave}
+          disabled={loading}
+          className="absolute bg-green-500 p-4 rounded-full items-center bottom-4 w-full self-center"
+        >
+          {loading === true ? (
+            <ActivityIndicator />
+          ) : (
+            <Text className="text-xl font-bold text-white">SAVE</Text>
+          )}
+        </TouchableOpacity>
       </View>
     </View>
   );
