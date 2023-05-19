@@ -27,11 +27,11 @@ const WatchPreferenceScreen = () => {
       name: "👻 Horror",
     },
     {
-      id: 4,
+      id: 5,
       name: "🎶 Musical",
     },
     {
-      id: 4,
+      id: 6,
       name: "💕 Romance",
     },
   ];
