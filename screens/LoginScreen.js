@@ -4,14 +4,46 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import Header from "../components/Header";
+import axios from "axios";
+import { BASE_URL } from "../config/config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = () => {
+    setLoading(true);
+    axios
+      .post(`${BASE_URL}/user`, {
+        email,
+        password,
+      })
+      .then(async (res) => {
+        if (res.status === 200) {
+          const { userId, firstname, lastname, email } = res.data;
+
+          // Store data in AsyncStorage
+          await AsyncStorage.setItem("userId", userId);
+          await AsyncStorage.setItem("firstname", firstname);
+          await AsyncStorage.setItem("lastname", lastname);
+          await AsyncStorage.setItem("email", email);
+
+          setLoading(false);
+          navigation.navigate("Home");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const navigation = useNavigation();
   return (
@@ -45,9 +77,18 @@ const LoginScreen = () => {
           />
         </View>
 
-        <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+        <TouchableOpacity
+          disabled={loading}
+          onPress={() => {
+            handleLogin();
+          }}
+        >
           <View className="bg-green-500 items-center p-4 rounded-lg">
-            <Text className="text-white">Log in</Text>
+            {loading ? (
+              <ActivityIndicator />
+            ) : (
+              <Text className="text-white">Log in</Text>
+            )}
           </View>
         </TouchableOpacity>
 

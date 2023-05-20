@@ -1,4 +1,11 @@
-import { View, Text, TouchableOpacity, Image, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Pressable,
+  ActivityIndicator,
+} from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { BookmarkIcon } from "react-native-heroicons/solid";
 import RenderStack from "../components/RenderStack";
@@ -7,9 +14,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import DrawerModal from "../components/DrawerModal";
 import axios from "axios";
 import { BASE_URL, userId } from "../config/config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const HomeScreen = () => {
   const [data, setData] = useState([]);
+  const [firstName, setFirstName] = useState(null);
 
   const navigation = useNavigation();
   const [drawerModalVisibility, setDrawerModalVisibility] = useState(false);
@@ -26,10 +35,13 @@ const HomeScreen = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const userId = await AsyncStorage.getItem("userId");
+        const firstname = await AsyncStorage.getItem("firstname");
         const response = await axios.post(`${BASE_URL}/movie/fetch`, {
-          userId: userId,
+          userId,
         });
         setData(response.data.data);
+        setFirstName(firstname);
       } catch (error) {
         console.log(error);
       }
@@ -58,7 +70,9 @@ const HomeScreen = () => {
             />
           </TouchableOpacity>
           <View className="flex-1">
-            <Text className="text-lg font-bold text-white">Hello, Joe 👋</Text>
+            <Text className="text-lg font-bold text-white">
+              Hello, {firstName}👋
+            </Text>
             <Text className="text-xs text-gray-400">
               Let's find something for you to watch
             </Text>
@@ -75,7 +89,9 @@ const HomeScreen = () => {
         {data.length > 0 ? (
           <RenderStack data={data} />
         ) : (
-          <Text className="text-white">Loading</Text>
+          <View>
+            <ActivityIndicator size={"large"} />
+          </View>
         )}
       </View>
     </SafeAreaView>

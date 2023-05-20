@@ -8,11 +8,12 @@ import {
 import WatchlistModal from "./WatchlistModal";
 import { BASE_URL, userId } from "../config/config";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const addBookmark = async (movieId) => {
   try {
     await axios.post(`${BASE_URL}/bookmark/new`, {
-      userId: userId,
+      userId: AsyncStorage.userId,
       movieId,
     });
   } catch (error) {
@@ -24,7 +25,7 @@ const addBookmark = async (movieId) => {
 const removeBookmark = async (movieId) => {
   try {
     await axios.delete(`${BASE_URL}/bookmark/delete`, {
-      userId: userId,
+      userId: AsyncStorage.userId,
       movieId,
     });
   } catch (error) {

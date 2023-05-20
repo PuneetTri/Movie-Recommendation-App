@@ -4,16 +4,49 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import Header from "../components/Header";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { BASE_URL } from "../config/config";
 
 const SignupScreen = () => {
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+
+  const [loading, SetLoading] = useState(false);
+
+  const handleSignup = async () => {
+    SetLoading(true);
+    try {
+      const response = await axios.post(`${BASE_URL}/user/new`, {
+        firstname: firstName,
+        lastname: lastName,
+        email,
+        password,
+      });
+
+      if (response.status === 200) {
+        const { userId, firstname, lastname, email } = response.data;
+
+        // Store data in AsyncStorage
+        await AsyncStorage.setItem("userId", userId);
+        await AsyncStorage.setItem("firstname", firstname);
+        await AsyncStorage.setItem("lastname", lastname);
+        await AsyncStorage.setItem("email", email);
+
+        SetLoading(false);
+        navigation.navigate("Preferences");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const navigation = useNavigation();
   return (
@@ -70,9 +103,13 @@ const SignupScreen = () => {
           />
         </View>
 
-        <TouchableOpacity onPress={() => navigation.navigate("Preferences")}>
+        <TouchableOpacity disabled={loading} onPress={() => handleSignup()}>
           <View className="bg-green-500 items-center p-4 rounded-lg">
-            <Text className="text-white">Create Account</Text>
+            {loading ? (
+              <ActivityIndicator />
+            ) : (
+              <Text className="text-white">Create Account</Text>
+            )}
           </View>
         </TouchableOpacity>
 

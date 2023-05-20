@@ -5,7 +5,8 @@ import WatchlistItem from "../components/WatchlistItem";
 import Header from "../components/Header";
 import { ScrollView } from "react-native";
 import axios from "axios";
-import { BASE_URL, userId } from "../config/config";
+import { BASE_URL } from "../config/config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const WatchlistScreen = () => {
   const [movies, setMovies] = useState([]);
@@ -21,7 +22,7 @@ const WatchlistScreen = () => {
     const fetchData = async () => {
       try {
         const response = await axios.post(`${BASE_URL}/bookmark/fetch`, {
-          userId: userId,
+          userId: AsyncStorage.userId,
         });
         setMovies(response.data);
         console.log(movies);

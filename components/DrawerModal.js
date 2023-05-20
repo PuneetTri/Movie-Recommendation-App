@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-native-modal";
 import {
   UserIcon,
@@ -8,8 +8,45 @@ import {
   ArrowLeftOnRectangleIcon,
   PencilSquareIcon,
 } from "react-native-heroicons/outline";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const DrawerModal = ({ isVisible, toggle, userProfileImg, navigation }) => {
+  const [firstName, setFirstName] = useState(null);
+  const [lastName, setLastName] = useState(null);
+  const [email, setEmail] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userId = await AsyncStorage.getItem("userId");
+        const firstname = await AsyncStorage.getItem("firstname");
+        const lastname = await AsyncStorage.getItem("lastname");
+        const email = await AsyncStorage.getItem("email");
+
+        setFirstName(firstname);
+        setLastName(lastname);
+        setEmail(email);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleSignout = async () => {
+    try {
+      await AsyncStorage.removeItem("userId");
+      await AsyncStorage.removeItem("firstname");
+      await AsyncStorage.removeItem("lastname");
+      await AsyncStorage.removeItem("email");
+
+      navigation.navigate("Landing");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Modal
       isVisible={isVisible}
@@ -26,8 +63,10 @@ const DrawerModal = ({ isVisible, toggle, userProfileImg, navigation }) => {
             className="rounded-full h-12 w-12"
           />
           <View className="py-4">
-            <Text className="text-white font-bold text-xl">Joe Biden</Text>
-            <Text className="text-xs text-gray-400">joebiden@gmail.com</Text>
+            <Text className="text-white font-bold text-xl">
+              {firstName} {lastName}
+            </Text>
+            <Text className="text-xs text-gray-400">{email}</Text>
           </View>
         </View>
         <View className="p-4 flex-1">
@@ -72,7 +111,10 @@ const DrawerModal = ({ isVisible, toggle, userProfileImg, navigation }) => {
             <Text className="text-white text-xl">Watchlist</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity className="mx-4 my-8 bg-red-500 p-4 rounded-full items-center">
+        <TouchableOpacity
+          onPress={() => handleSignout()}
+          className="mx-4 my-8 bg-red-500 p-4 rounded-full items-center"
+        >
           <Text className="text-xl font-bold text-white">LOGOUT</Text>
         </TouchableOpacity>
       </View>
