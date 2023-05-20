@@ -7,20 +7,36 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import Header from "../components/Header";
 import axios from "axios";
 import { BASE_URL } from "../config/config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import AlertModal from "../components/AlertModal";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
   const [loading, setLoading] = useState(false);
+  const [alertVisibility, setAlertVisibility] = useState(false);
+  const [alertMode, setAlertMode] = useState(null);
+  const [alertMessage, setAlertMessage] = useState(null);
+
+  const showAlert = (mode, message) => {
+    setAlertVisibility(true);
+    setAlertMessage(mode);
+    setAlertMessage(message);
+    setTimeout(() => setAlertVisibility(false), 1000);
+  };
 
   const handleLogin = () => {
     setLoading(true);
+    if (!isValidEmail(email)) {
+      showAlert("message", "Please enter a valid email");
+      setLoading(false);
+      return;
+    }
     axios
       .post(`${BASE_URL}/user`, {
         email,
@@ -37,12 +53,29 @@ const LoginScreen = () => {
           await AsyncStorage.setItem("email", email);
 
           setLoading(false);
-          navigation.navigate("Home");
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: "Home" }], // Reset to home screen
+            })
+          );
         }
       })
       .catch((error) => {
         console.log(error);
+        if (error.response && error.response.status === 401) {
+          showAlert("message", error.response.data.message);
+        } else {
+          showAlert("message", "An error occurred. Please try again.");
+        }
+        setLoading(false);
       });
+  };
+
+  const isValidEmail = (email) => {
+    // Regular expression to validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   };
 
   const navigation = useNavigation();
@@ -94,13 +127,19 @@ const LoginScreen = () => {
 
         <TouchableOpacity
           className="self-center"
-          onPress={() => navigation.navigate("Signup")}
+          onPress={() => navigation.replace("Signup")}
         >
           <Text className="text-white">
             Dont have an account? <Text className="text-green-500">Signup</Text>
           </Text>
         </TouchableOpacity>
       </ScrollView>
+
+      <AlertModal
+        mode={alertMode}
+        message={alertMessage}
+        isVisible={alertVisibility}
+      />
     </View>
   );
 };

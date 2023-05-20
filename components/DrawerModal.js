@@ -9,11 +9,14 @@ import {
   PencilSquareIcon,
 } from "react-native-heroicons/outline";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CommonActions } from "@react-navigation/routers";
 
 const DrawerModal = ({ isVisible, toggle, userProfileImg, navigation }) => {
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
   const [email, setEmail] = useState(null);
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,13 +38,20 @@ const DrawerModal = ({ isVisible, toggle, userProfileImg, navigation }) => {
   }, []);
 
   const handleSignout = async () => {
+    setLoading(true);
     try {
       await AsyncStorage.removeItem("userId");
       await AsyncStorage.removeItem("firstname");
       await AsyncStorage.removeItem("lastname");
       await AsyncStorage.removeItem("email");
 
-      navigation.navigate("Landing");
+      setLoading(false);
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: "Landing" }], // Reset to landing screen
+        })
+      );
     } catch (error) {
       console.log(error);
     }

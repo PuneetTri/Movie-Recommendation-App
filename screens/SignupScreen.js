@@ -7,11 +7,12 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import Header from "../components/Header";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BASE_URL } from "../config/config";
+import AlertModal from "../components/AlertModal";
 
 const SignupScreen = () => {
   const [firstName, setFirstName] = useState(null);
@@ -19,11 +20,31 @@ const SignupScreen = () => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
-  const [loading, SetLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [alertVisibility, setAlertVisibility] = useState(false);
+  const [alertMode, setAlertMode] = useState(null);
+  const [alertMessage, setAlertMessage] = useState(null);
+
+  const showAlert = (mode, message) => {
+    setAlertVisibility(true);
+    setAlertMessage(mode);
+    setAlertMessage(message);
+    setTimeout(() => setAlertVisibility(false), 1000);
+  };
 
   const handleSignup = async () => {
-    SetLoading(true);
     try {
+      if (!isValidEmail(email)) {
+        showAlert("message", "Please enter a valid email");
+        return;
+      }
+
+      if (password.length < 8) {
+        showAlert("message", "Password should be at least 8 characters long");
+        return;
+      }
+
+      setLoading(true);
       const response = await axios.post(`${BASE_URL}/user/new`, {
         firstname: firstName,
         lastname: lastName,
@@ -40,12 +61,29 @@ const SignupScreen = () => {
         await AsyncStorage.setItem("lastname", lastname);
         await AsyncStorage.setItem("email", email);
 
-        SetLoading(false);
-        navigation.navigate("Preferences");
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: "Preferences" }], // Reset to preferences screen
+          })
+        );
       }
     } catch (error) {
       console.log(error);
+      if (error.response && error.response.status === 401) {
+        showAlert("message", error.response.data.message);
+      } else {
+        showAlert("message", "An error occurred. Please try again.");
+      }
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const isValidEmail = (email) => {
+    // Regular expression to validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   };
 
   const navigation = useNavigation();
@@ -114,7 +152,7 @@ const SignupScreen = () => {
 
         <TouchableOpacity
           className="self-center"
-          onPress={() => navigation.navigate("Login")}
+          onPress={() => navigation.replace("Login")}
         >
           <Text className="text-white">
             Already have an account?{" "}
@@ -122,6 +160,12 @@ const SignupScreen = () => {
           </Text>
         </TouchableOpacity>
       </ScrollView>
+
+      <AlertModal
+        mode={alertMode}
+        message={alertMessage}
+        isVisible={alertVisibility}
+      />
     </View>
   );
 };

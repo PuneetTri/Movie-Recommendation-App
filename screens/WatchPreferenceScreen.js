@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import Header from "../components/Header";
 import { useNavigation } from "@react-navigation/native";
@@ -64,11 +64,13 @@ const WatchPreferenceScreen = () => {
           })}
         </View>
 
-        <RoundedGreenButton
-          text="SAVE"
-          navigation={navigation}
-          navigateTo={"Streaming"}
-        />
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => navigation.navigate("Streaming")}
+          className="absolute bg-green-500 p-4 rounded-full items-center bottom-4 w-full self-center"
+        >
+          <Text className="text-xl font-bold text-white">SAVE</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

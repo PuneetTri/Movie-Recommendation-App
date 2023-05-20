@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import Header from "../components/Header";
 import { useNavigation } from "@react-navigation/native";
@@ -70,11 +70,13 @@ const PreferencesScreen = () => {
           })}
           <View className="h-16"></View>
         </ScrollView>
-        <RoundedGreenButton
-          text="SAVE"
-          navigation={navigation}
-          navigateTo={"Home"}
-        />
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => navigation.replace("Home")}
+          className="absolute bg-green-500 p-4 rounded-full items-center bottom-4 w-full self-center"
+        >
+          <Text className="text-xl font-bold text-white">SAVE</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

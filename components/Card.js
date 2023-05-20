@@ -12,26 +12,30 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const addBookmark = async (movieId) => {
   try {
+    const userId = await AsyncStorage.getItem("userId");
     await axios.post(`${BASE_URL}/bookmark/new`, {
-      userId: AsyncStorage.userId,
-      movieId,
+      userId: userId,
+      movieId: movieId,
     });
+    console.log(movieId + " added");
   } catch (error) {
     console.log(error);
   }
-  console.log(movieId + "added");
 };
 
 const removeBookmark = async (movieId) => {
   try {
+    const userId = await AsyncStorage.getItem("userId");
     await axios.delete(`${BASE_URL}/bookmark/delete`, {
-      userId: AsyncStorage.userId,
-      movieId,
+      data: {
+        userId: userId,
+        movieId: movieId,
+      },
     });
+    console.log(movieId + " removed");
   } catch (error) {
     console.log(error);
   }
-  console.log(movieId + "removed");
 };
 
 const Card = ({

@@ -10,17 +10,22 @@ import Header from "../components/Header";
 import { useNavigation } from "@react-navigation/native";
 import RoundedGreenButton from "../components/RoundedGreenButton";
 import axios from "axios";
-import BASE_URL from "../config/config";
+import BASE_URL, { userId } from "../config/config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const updatePassword = async (password, newPassword) => {
   try {
-    await axios.put(`${BASE_URL}/user/update/password`, {
-      userId: "646798f476369e8f3b76186b",
-      data: {
-        password,
-        newPassword,
-      },
-    });
+    if (password && newPassword) {
+      const userId = await AsyncStorage.getItem("userId");
+
+      await axios.put(`${BASE_URL}/user/update/password`, {
+        userId,
+        data: {
+          password,
+          newPassword,
+        },
+      });
+    }
   } catch (error) {
     console.log(error);
   }
@@ -87,12 +92,12 @@ const ChangePasswordScreen = () => {
           activeOpacity={0.8}
           onPress={handleSave}
           disabled={loading}
-          className="absolute bg-green-500 p-4 rounded-full items-center bottom-4 w-full self-center"
+          className="bg-green-500 p-4 rounded-lg items-center w-full self-center mt-4"
         >
           {loading === true ? (
-            <ActivityIndicator />
+            <ActivityIndicator size="small" />
           ) : (
-            <Text className="text-xl font-bold text-white">UPDATE</Text>
+            <Text className="font-bold text-white">UPDATE</Text>
           )}
         </TouchableOpacity>
       </View>

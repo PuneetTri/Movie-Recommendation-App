@@ -1,5 +1,5 @@
-import { View, Text, Image, ScrollView } from "react-native";
-import React from "react";
+import { View, Text, Image, ScrollView, ActivityIndicator } from "react-native";
+import React, { useState } from "react";
 import Modal from "react-native-modal";
 import { XMarkIcon } from "react-native-heroicons/solid";
 import { TouchableOpacity } from "react-native";
@@ -17,6 +17,29 @@ const WatchlistMovieModal = ({
   description,
   link,
 }) => {
+  const [loading, setLoading] = useState(false);
+  const removeBookmark = async (movieId) => {
+    try {
+      const userId = await AsyncStorage.getItem("userId");
+      await axios.delete(`${BASE_URL}/bookmark/delete`, {
+        data: {
+          userId: userId,
+          movieId: movieId,
+        },
+      });
+      console.log(movieId + " removed");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSave = async () => {
+    setLoading(true);
+    await removeBookmark(movieId);
+    setLoading(false);
+    setExpanded(false);
+  };
+
   return (
     <Modal onBackButtonPress={() => setExpanded(false)} isVisible={isVisible}>
       <View
@@ -58,10 +81,17 @@ const WatchlistMovieModal = ({
 
           <WatchNowButton gotoLink={link[0]} setExpanded={setExpanded} />
 
-          <TouchableOpacity className="bg-green-500 p-4 rounded-full items-center w-full self-center">
-            <Text className="text-xl font-bold text-white">
-              Remove from watchlist
-            </Text>
+          <TouchableOpacity
+            onPress={handleSave}
+            className="bg-green-500 p-4 rounded-full items-center w-full self-center"
+          >
+            {loading ? (
+              <ActivityIndicator />
+            ) : (
+              <Text className="text-xl font-bold text-white">
+                Remove from watchlist
+              </Text>
+            )}
           </TouchableOpacity>
         </ScrollView>
       </View>

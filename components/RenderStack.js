@@ -44,7 +44,7 @@ const RenderStack = ({ data }) => {
           },
         }}
         onSwipedRight={async (index) => {
-          const url = data[index].link;
+          const url = data[index].link[0];
           const supported = await Linking.canOpenURL(url);
 
           if (supported) {

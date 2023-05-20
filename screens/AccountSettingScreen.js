@@ -6,17 +6,23 @@ import { TextInput } from "react-native";
 import RoundedGreenButton from "../components/RoundedGreenButton";
 import axios from "axios";
 import { BASE_URL, userId } from "../config/config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const updateAccount = async (firstName, lastName, email) => {
   try {
-    await axios.put(`${BASE_URL}/user/update`, {
-      userId: userId,
-      data: {
-        firstname: firstName,
-        lastname: lastName,
-        email,
-      },
-    });
+    if (firstName || lastName || email) {
+      const userId = await AsyncStorage.getItem("userId");
+      const data = {
+        firstname: firstName || undefined,
+        lastname: lastName || undefined,
+        email: email || undefined,
+      };
+
+      await axios.put(`${BASE_URL}/user/update`, {
+        userId,
+        data,
+      });
+    }
   } catch (error) {
     console.log(error);
   }
@@ -100,12 +106,12 @@ const AccountScreen = () => {
           activeOpacity={0.8}
           onPress={handleSave}
           disabled={loading}
-          className="absolute bg-green-500 p-4 rounded-full items-center bottom-4 w-full self-center"
+          className="bg-green-500 p-4 rounded-lg items-center w-full self-center mt-4"
         >
           {loading === true ? (
-            <ActivityIndicator />
+            <ActivityIndicator size="small" />
           ) : (
-            <Text className="text-xl font-bold text-white">SAVE</Text>
+            <Text className="font-bold text-white">UPDATE</Text>
           )}
         </TouchableOpacity>
       </View>

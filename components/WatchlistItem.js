@@ -31,9 +31,13 @@ const WatchlistItem = ({
           <Text numberOfLines={3} className="text-gray-400 text-sm">
             {description}
           </Text>
-          <Text className="text-gray-600 text-xs">Comedy, Drama</Text>
+          <Text className="text-gray-600 text-xs">
+            {genre.map((g, index) =>
+              index !== genre.length - 1 ? g + ", " : g
+            )}
+          </Text>
           <Text numberOfLines={1} className="text-gray-600 text-xs">
-            Actor, Second actor, Third actor, supporting actor
+            {cast.map((c, index) => (index !== cast.length - 1 ? c + ", " : c))}
           </Text>
         </View>
       </TouchableOpacity>

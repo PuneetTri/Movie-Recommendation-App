@@ -71,7 +71,7 @@ const HomeScreen = () => {
           </TouchableOpacity>
           <View className="flex-1">
             <Text className="text-lg font-bold text-white">
-              Hello, {firstName}👋
+              {firstName ? `Hello, ${firstName}👋` : `...`}
             </Text>
             <Text className="text-xs text-gray-400">
               Let's find something for you to watch
