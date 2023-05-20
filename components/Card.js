@@ -6,12 +6,60 @@ import {
   BookmarkSlashIcon,
 } from "react-native-heroicons/outline";
 import WatchlistModal from "./WatchlistModal";
+import { BASE_URL, userId } from "../config/config";
+import axios from "axios";
 
-const Card = ({ posterImg, name, description }) => {
+const addBookmark = async (movieId) => {
+  try {
+    await axios.post(`${BASE_URL}/bookmark/new`, {
+      userId: userId,
+      movieId,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  console.log(movieId + "added");
+};
+
+const removeBookmark = async (movieId) => {
+  try {
+    await axios.delete(`${BASE_URL}/bookmark/delete`, {
+      userId: userId,
+      movieId,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  console.log(movieId + "removed");
+};
+
+const Card = ({
+  movieId,
+  genre,
+  cast,
+  director,
+  posterImg,
+  name,
+  description,
+}) => {
+  const [loading, setLoading] = useState(false);
   const [bookmark, setBookmark] = useState(false);
   const [watchlistModalVisibility, setWatchlistModalVisibility] =
     useState(false);
   const [descriptionCollapsed, setDescriptionCollapsed] = useState(false);
+
+  const handleSave = async () => {
+    setLoading(true);
+    if (!bookmark) {
+      await addBookmark(movieId);
+    } else {
+      await removeBookmark(movieId);
+    }
+    setLoading(false);
+    setWatchlistModalVisibility(true);
+    setTimeout(() => setWatchlistModalVisibility(false), 1000);
+    setBookmark(!bookmark);
+  };
 
   const toggleDescription = () => {
     setDescriptionCollapsed(!descriptionCollapsed);
@@ -26,12 +74,7 @@ const Card = ({ posterImg, name, description }) => {
         style={{ height: "100%", width: "100%" }}
       />
       <TouchableOpacity
-        onLongPress={() => {
-          console.log("Added");
-          setWatchlistModalVisibility(true);
-          setTimeout(() => setWatchlistModalVisibility(false), 1000);
-          setBookmark(!bookmark);
-        }}
+        onLongPress={handleSave}
         className="absolute right-0 top-0 m-3 p-3 bg-black rounded-full"
       >
         {bookmark === true ? (
@@ -54,13 +97,17 @@ const Card = ({ posterImg, name, description }) => {
               <Text className="text-white">{description}</Text>
               <View className="flex-row items-center flex-wrap">
                 <Text className="text-white border-2 border-white p-2 mt-4 mr-4 rounded-2xl">
-                  Genre
+                  {genre.map((g, index) =>
+                    index !== genre.length - 1 ? g + ", " : g
+                  )}
                 </Text>
                 <Text className="text-white border-2 border-white p-2 mt-4 mr-4 rounded-2xl">
-                  Director
+                  {director}
                 </Text>
                 <Text className="text-white border-2 border-white p-2 mt-4 mr-4 rounded-2xl">
-                  Actor, Actress, Side-role, Another role
+                  {cast.map((c, index) =>
+                    index !== cast.length - 1 ? c + ", " : c
+                  )}
                 </Text>
               </View>
             </TouchableOpacity>

@@ -66,9 +66,13 @@ const RenderStack = ({ data }) => {
         }}
         renderCard={(card) => (
           <Card
+            movieId={card._id}
             posterImg={card.posterImg}
             name={card.name}
+            genre={card.genre}
+            cast={card.cast}
             description={card.description}
+            director={card.director}
           />
         )}
       />

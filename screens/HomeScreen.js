@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import DrawerModal from "../components/DrawerModal";
 import axios from "axios";
-import BASE_URL from "../config/config";
+import { BASE_URL, userId } from "../config/config";
 
 const HomeScreen = () => {
   const [data, setData] = useState([]);
@@ -27,7 +27,7 @@ const HomeScreen = () => {
     const fetchData = async () => {
       try {
         const response = await axios.post(`${BASE_URL}/movie/fetch`, {
-          userId: "646798f476369e8f3b76186b",
+          userId: userId,
         });
         setData(response.data.data);
       } catch (error) {
@@ -72,7 +72,11 @@ const HomeScreen = () => {
         </View>
 
         {/* Body */}
-        {data.length > 0 ? <RenderStack data={data} /> : null}
+        {data.length > 0 ? (
+          <RenderStack data={data} />
+        ) : (
+          <Text className="text-white">Loading</Text>
+        )}
       </View>
     </SafeAreaView>
   );

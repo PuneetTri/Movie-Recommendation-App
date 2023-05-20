@@ -2,7 +2,16 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import WatchlistMovieModal from "./WatchlistMovieModal";
 
-const WatchlistItem = ({ posterImgUrl, title, description, link }) => {
+const WatchlistItem = ({
+  posterImgUrl,
+  movieId,
+  title,
+  genre,
+  cast,
+  director,
+  description,
+  link,
+}) => {
   const [expanded, setExpanded] = useState(false);
   const expand = () => setExpanded(!expanded);
   return (
@@ -31,6 +40,10 @@ const WatchlistItem = ({ posterImgUrl, title, description, link }) => {
 
       <WatchlistMovieModal
         isVisible={expanded}
+        movieId={movieId}
+        genre={genre}
+        cast={cast}
+        director={director}
         setExpanded={setExpanded}
         posterImageUrl={posterImgUrl}
         title={title}

@@ -9,7 +9,11 @@ const WatchlistMovieModal = ({
   isVisible,
   setExpanded,
   posterImageUrl,
+  movieId,
   title,
+  genre,
+  cast,
+  director,
   description,
   link,
 }) => {
@@ -36,21 +40,23 @@ const WatchlistMovieModal = ({
             {title}
           </Text>
           <Text className="text-gray-500 text-lg self-center">
-            Comedy, Drama
+            {genre.map((g, index) =>
+              index !== genre.length - 1 ? g + ", " : g
+            )}
           </Text>
           <Text className="text-white">{description}</Text>
           <Text className="text-white">
-            <Text className="font-bold">Director:</Text> Director Name
+            <Text className="font-bold">Director:</Text> {director}
           </Text>
           <Text className="text-white">
-            <Text className="font-bold">Stars:</Text> Actor, another actor,
-            third actor, supporting actor
+            <Text className="font-bold">Stars:</Text>{" "}
+            {cast.map((c, index) => (index !== cast.length - 1 ? c + ", " : c))}
           </Text>
           <Text className="text-gray-500 italic">
             <Text className="font-bold italic">Added:</Text> 2 days ago
           </Text>
 
-          <WatchNowButton gotoLink={link} setExpanded={setExpanded} />
+          <WatchNowButton gotoLink={link[0]} setExpanded={setExpanded} />
 
           <TouchableOpacity className="bg-green-500 p-4 rounded-full items-center w-full self-center">
             <Text className="text-xl font-bold text-white">
