@@ -82,7 +82,6 @@ const SignupScreen = () => {
         <View className="space-y-2">
           <Text className="text-white">Email</Text>
           <TextInput
-            secureTextEntry
             value={email}
             onChangeText={(val) => setEmail(val)}
             placeholder="johndoe@mail.com"
